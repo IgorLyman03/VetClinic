@@ -1,0 +1,77 @@
+version: '3.8'
+services:
+  auth.api:
+    container_name: auth.api
+    build:
+      context: .
+      dockerfile: IdentityServer/Dockerfile
+    environment:
+       - ASPNETCORE_ENVIRONMENT=Development
+       - ASPNETCORE_URLS=http://+:5000
+       - ConnectionString=server=postgres;port=5432;database=Identity;uid=postgres;password=postgres;
+    depends_on:
+      - postgres
+    ports:
+      - 5000:5000
+  vet_aid.api:
+    container_name: vet_aid.api
+    build:
+      context: .
+      dockerfile: VetAid/Dockerfile
+    environment:
+       - ASPNETCORE_ENVIRONMENT=Development
+       - ASPNETCORE_URLS=http://+:5001
+       - ConnectionString=server=postgres;port=5432;database=Aid;uid=postgres;password=postgres;
+    depends_on:
+      - postgres
+    ports:
+      - 5001:5001
+  doctor_profile.api:
+    container_name: doctor_profile.api
+    build:
+      context: .
+      dockerfile: DoctorProfile/Dockerfile
+    environment:
+       - ASPNETCORE_ENVIRONMENT=Development
+       - ASPNETCORE_URLS=http://+:5002
+       - ConnectionString=server=postgres;port=5432;database=DoctorProfile;uid=postgres;password=postgres;
+    depends_on:
+      - postgres
+    ports:
+      - 5002:5002
+  appointment.api:
+    container_name: appointment.api
+    build:
+        context: .
+        dockerfile: Appointment/Dockerfile
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_URLS=http://+:5004
+        - ConnectionString=server=postgres;port=5432;database=Appointment;uid=postgres;password=postgres;
+        - DoctorApiUrl=http://doctor_profile.api:5002
+    depends_on:
+        - postgres
+        - doctor_profile.api
+    ports:
+        - 5004:5004
+  frontend:
+    build:
+      context: ./veterinary-clinic-frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - auth.api
+      - vet_aid.api
+      - doctor_profile.api
+      - appointment.api
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5433:5432
+networks:
+  default:
+    driver: bridge

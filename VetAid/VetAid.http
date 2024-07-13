@@ -1,0 +1,6 @@
+@VetAid_HostAddress = http://localhost:5027
+
+GET {{VetAid_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
