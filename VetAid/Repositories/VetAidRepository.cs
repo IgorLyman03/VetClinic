@@ -66,11 +66,11 @@ namespace VetAid.Repositories
             });
         }
 
-        public async Task<ServiceResult<VetAidEntity>> UpdateAsync(VetAidEntity entity)
+        public async Task<ServiceResult<VetAidEntity>> UpdateAsync(int id, VetAidEntity entity)
         {
             return await ExecuteSafeAsync(async () =>
             {
-                var vetAid = await _dbContext.VetAids.Include(i => i.AnimalTypes).FirstOrDefaultAsync(v => v.Id == entity.Id);
+                var vetAid = await _dbContext.VetAids.Include(i => i.AnimalTypes).FirstOrDefaultAsync(v => v.Id == id);
                 if (vetAid == null)
                 {
                     return ServiceResult<VetAidEntity>.Failure(new ServiceError("Entity not found", ServiceErrorType.NotFound));

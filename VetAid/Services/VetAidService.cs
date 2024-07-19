@@ -69,12 +69,12 @@ namespace VetAid.Services
             }
         }
 
-        public async Task<ServiceResult<VetAidDto>> UpdateAsync(VetAidDto dto)
+        public async Task<ServiceResult<VetAidDto>> UpdateAsync(int id, VetAidDto dto)
         {
             try
             {
                 var entity = _mapper.Map<VetAidEntity>(dto);
-                var result = await _repository.UpdateAsync(entity);
+                var result = await _repository.UpdateAsync(id, entity);
                 return result.Map(updatedEntity => _mapper.Map<VetAidDto>(updatedEntity));
             }
             catch (Exception ex)

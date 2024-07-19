@@ -22,7 +22,6 @@ builder.Services.AddCors(options =>
                    .AllowAnyHeader();
         });
 });
-// Add services to the container.
 
 builder.Services.AddControllers();
 

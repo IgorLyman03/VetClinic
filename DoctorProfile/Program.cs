@@ -37,9 +37,6 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddMemoryCache();
 
-// Add services to the container.
-
-
 builder.Services.AddTransient<IAuthorizationHandler, DoctorTimetableAuthorizationHandler>();
 builder.Services.AddTransient<IAuthorizationHandler, DoctorInfoAuthorizationHandler>();
 
@@ -95,7 +92,6 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 
-    // Add JWT Authentication support to Swagger
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token in the text input below.",
@@ -103,22 +99,6 @@ builder.Services.AddSwaggerGen(options =>
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer"
-    });
-
-    // Указываем, что для использования Swagger требуется аутентификация
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            new List<string>()
-        }
     });
 });
 

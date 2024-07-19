@@ -2,6 +2,7 @@
 using CSharpFunctionalExtensions;
 using DoctorProfile.Data;
 using DoctorProfile.Data.Entities;
+using DoctorProfile.Model;
 using DoctorProfile.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using static Common.Helpers.RepositoryHelper;
@@ -46,15 +47,21 @@ namespace DoctorProfile.Repositories
             });
         }
 
-        public async Task<ServiceResult<IEnumerable<DoctorTimetable>>> GetByDatesAsync(string userId, DateTimeOffset startDate, DateTimeOffset endDate)
+        public async Task<ServiceResult<IEnumerable<DoctorTimetableSegment>>> GetSegmentsByDatesAsync(string userId, DateTimeOffset startDate, DateTimeOffset endDate)
         {
             return await ExecuteSafeAsync(async () =>
             {
                 var timetables = await _context.DoctorTimetables
-                .Where(dt => dt.UserId == userId && dt.StartTime >= startDate && dt.EndTime <= endDate)
-                .ToListAsync();
+                    .Where(dt => dt.UserId == userId && dt.StartTime <= endDate && dt.EndTime >= startDate)
+                    .ToListAsync();
 
-                return ServiceResult<IEnumerable<DoctorTimetable>>.Success(timetables);
+                var segments = timetables.Select(dt => new DoctorTimetableSegment(
+                    dt.UserId,
+                    dt.StartTime.Value > startDate ? dt.StartTime.Value : startDate,
+                    dt.EndTime.Value < endDate ? dt.EndTime.Value : endDate
+                ));
+
+                return ServiceResult<IEnumerable<DoctorTimetableSegment>>.Success(segments);
             });
         }
 

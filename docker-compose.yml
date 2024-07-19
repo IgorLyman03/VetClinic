@@ -49,9 +49,11 @@ services:
         - ASPNETCORE_URLS=http://+:5004
         - ConnectionString=server=postgres;port=5432;database=Appointment;uid=postgres;password=postgres;
         - DoctorApiUrl=http://doctor_profile.api:5002
+        - VetAidApiUrl=http://vet_aid.api:5001
     depends_on:
         - postgres
         - doctor_profile.api
+        - vet_aid.api
     ports:
         - 5004:5004
   frontend:

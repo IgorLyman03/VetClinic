@@ -53,13 +53,13 @@ namespace DoctorProfile.Controllers
             return result.ToActionResult();
         }
 
-        [HttpGet("ByDates")]
+        [HttpGet("SegmentsByDates")]
         [ProducesResponseType(typeof(DoctorInfoDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<DoctorTimetableDto>>> GetByDates(string userId, DateTimeOffset startDate, DateTimeOffset endDate)
+        public async Task<ActionResult<IEnumerable<DoctorTimetableSegmentDto>>> GetSegmentsByDates(string userId, DateTimeOffset startDate, DateTimeOffset endDate)
         {
-            var result = await _doctorTimetableService.GetByDatesAsync(userId, startDate, endDate);
+            var result = await _doctorTimetableService.GetSegmentsByDatesAsync(userId, startDate, endDate);
             return result.ToActionResult();
         }
 

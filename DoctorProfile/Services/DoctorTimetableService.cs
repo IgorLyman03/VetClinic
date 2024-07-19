@@ -108,17 +108,17 @@ namespace DoctorProfile.Services
             }
         }
 
-        public async Task<ServiceResult<IEnumerable<DoctorTimetableDto>>> GetByDatesAsync(string userId, DateTimeOffset startDate, DateTimeOffset endDate)
+        public async Task<ServiceResult<IEnumerable<DoctorTimetableSegmentDto>>> GetSegmentsByDatesAsync(string userId, DateTimeOffset startDate, DateTimeOffset endDate)
         {
             try
             {
-                var result = await _doctorTimetableRepository.GetByDatesAsync(userId, startDate, endDate);
-                return result.Map(timetables => _mapper.Map<IEnumerable<DoctorTimetableDto>>(timetables));
+                var result = await _doctorTimetableRepository.GetSegmentsByDatesAsync(userId, startDate, endDate);
+                return result.Map(timetables => _mapper.Map<IEnumerable<DoctorTimetableSegmentDto>>(timetables));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while getting doctor timetables for user {UserId} between dates {StartDate} and {EndDate}", userId, startDate, endDate);
-                return ServiceResult<IEnumerable<DoctorTimetableDto>>.Failure(new ServiceError("Error getting doctor timetables", ServiceErrorType.InternalError));
+                return ServiceResult<IEnumerable<DoctorTimetableSegmentDto>>.Failure(new ServiceError("Error getting doctor timetables", ServiceErrorType.InternalError));
             }
         }
     }

@@ -7,7 +7,7 @@ namespace VetAid.Services.Interfaces
         Task<ServiceResult<IEnumerable<VetAidDto>>> GetAllAsync();
         Task<ServiceResult<VetAidDto>> GetByIdAsync(int id);
         Task<ServiceResult<VetAidDto>> AddAsync(VetAidDto dto);
-        Task<ServiceResult<VetAidDto>> UpdateAsync(VetAidDto dto);
+        Task<ServiceResult<VetAidDto>> UpdateAsync(int id, VetAidDto dto);
         Task<ServiceResult<bool>> DeleteAsync(int id);
     }
 }

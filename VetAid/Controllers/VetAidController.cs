@@ -13,7 +13,7 @@ namespace VetAid.Controllers
 
         private readonly IVetAidService _vetAidService;
 
-        [HttpGet("All")]
+        [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<VetAidDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAll()
@@ -23,7 +23,7 @@ namespace VetAid.Controllers
         }
 
 
-        [HttpGet("ById")]
+        [HttpGet("{id}")]
         [ProducesResponseType(typeof(VetAidDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -52,9 +52,9 @@ namespace VetAid.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Update(VetAidDto dto)
+        public async Task<IActionResult> Update(int id,VetAidDto dto)
         {
-            var result = await _vetAidService.UpdateAsync(dto);
+            var result = await _vetAidService.UpdateAsync(id, dto);
             return result.IsSuccess ? Ok(result.Value) : StatusCode(result.Error.ErrorCode, result.Error);
         }
 

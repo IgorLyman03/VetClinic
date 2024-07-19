@@ -52,9 +52,9 @@ namespace VetAid.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> UpdateAsync(AnimalTypeDto animalTypeDto)
+        public async Task<IActionResult> UpdateAsync(int id, AnimalTypeDto animalTypeDto)
         {
-            var result = await _animalTypeService.UpdateAsync(animalTypeDto);
+            var result = await _animalTypeService.UpdateAsync(id, animalTypeDto);
             return result.IsSuccess ? Ok(result.Value) : StatusCode(result.Error.ErrorCode, result.Error);
         }
 

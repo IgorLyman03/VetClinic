@@ -28,7 +28,6 @@ builder.Services.AddCors(options =>
         });
 });
 
-// Add services to the container.
 builder.Services.Configure<AidConfig>(configuration);
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
@@ -85,7 +84,6 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 
-    // Add JWT Authentication support to Swagger
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token in the text input below.",
@@ -95,21 +93,6 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "Bearer"
     });
 
-    // Указываем, что для использования Swagger требуется аутентификация
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            new List<string>()
-        }
-    });
 });
 
 builder.Services.AddDbContextFactory<ApplicationDbContext>(opts => opts.UseNpgsql(configuration["ConnectionString"]));
@@ -117,7 +100,6 @@ builder.Services.AddDbContextFactory<ApplicationDbContext>(opts => opts.UseNpgsq
 var app = builder.Build();
 app.UseCors("AllowAll");
 
-// Enable Swagger middleware
 app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
@@ -127,16 +109,12 @@ app.UseSwaggerUI(options =>
     options.EnableDeepLinking();
 });
 
-// Enable HTTPS redirection
 app.UseHttpsRedirection();
 
-// Enable authentication
 app.UseAuthentication();
 
-// Enable authorization
 app.UseAuthorization();
 
-// Map controllers
 app.MapControllers();
 
 CreateDbIfNotExists(app);
