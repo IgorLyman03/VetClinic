@@ -48,6 +48,39 @@ This README provides instructions for setting up and running the VetClinic ASP.N
 
 The project consists of the following main directories:
 
+1. [IdentityServer Module](#1-identityserver-module)
+   - [Controllers](#controllers)
+   - [Models](#models)
+   - [Data](#data)
+   - [Roles](#roles)
+   - [Users](#users)
+2. [Common Module](#2-common-module)
+   - [Results](#results)
+   - [Helpers](#helpers)
+   - [Authorization](#authorization)
+3. [VetAid Module](#3-vetaid-module)
+   - [Entities](#entities)
+   - [Configurations](#configurations)
+   - [DTOs](#dtos)
+   - [Repositories](#repositories)
+   - [Services](#services)
+   - [Controllers](#controllers-1)
+4. [DoctorProfile Module](#4-doctorprofile-module)
+   - [Entities](#entities-1)
+   - [Models](#models-1)
+   - [Configurations](#configurations-1)
+   - [DTOs](#dtos-1)
+   - [Repositories](#repositories-1)
+   - [Services](#services-1)
+   - [Controllers](#controllers-2)
+5. [Appointment Module](#5-appointment-module)
+   - [Entities](#entities-2)
+   - [DTOs](#dtos-2)
+   - [Repositories](#repositories-2)
+   - [Services](#services-2)
+   - [Clients](#clients)
+   - [Controllers](#controllers-3)
+
 ## IdentityServer Module
 
 Handles user management. Key features include:
